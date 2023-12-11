@@ -1,3 +1,9 @@
 let addition = (a, b) => a + b;
 
-console.log(addition(1, 2));
+let subtraction = (a, b) => a - b;
+
+let multiplication = (a, b) => a * b;
+
+let division = (a, b) => a / b;
+
+console.log(division(4, 2));
