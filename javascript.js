@@ -23,3 +23,17 @@ function operate(operator, firstNumber, secondNumber) {
     }
 }
 
+const display = document.querySelector('#screen');
+
+let allNumbers = document.querySelectorAll('.number');
+
+function displayNumbers() {
+    for (let i = 0; i < allNumbers.length; i++) {
+        allNumbers[i].addEventListener('click', () => {
+            console.log("hello");
+            display.textContent += allNumbers[i].textContent;
+        });
+    }
+}
+
+displayNumbers();
