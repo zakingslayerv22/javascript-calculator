@@ -1,10 +1,24 @@
-let addition = (a, b) => a + b;
+function addition (array) {
+    array.splice(1, 1);
+    return array.reduce((sum, current) => sum + current, 0);
+}
 
-let subtraction = (a, b) => a - b;
+function subtraction (array) {
+    array.splice(1, 1);
+    return array.reduce((difference, current) => difference - current);
+}
 
-let multiplication = (a, b) => a * b;
+function multiplication (array) {
+    array.splice(1, 1);
+    return array.reduce((product, current) => product * current, 1);
+}
 
-let division = (a, b) => a / b;
+function division (array) {
+    array.splice(1, 1);
+    return array.reduce((quotient, current) => quotient / current);
+}
+
+
 
 
 function operate(operator, firstNumber, secondNumber) {
@@ -22,9 +36,10 @@ function operate(operator, firstNumber, secondNumber) {
 
 let firstNumber = "",
         secondNumber = "",
+            result = "",
             operator;
 
-let singleOperand = [];
+let calculateOperands = [];
 let finalOperands = [];
 
 const numberButtons = document.querySelectorAll(".number");
@@ -64,15 +79,47 @@ function handleCalculations() {
                     console.log(finalOperands)
                     
                     firstNumber = "";
-                }else if (finalOperands.length > 0 && secondNumber) {
+                }else if (finalOperands.length > 0 && secondNumber && operator) {
                     finalOperands.push(secondNumber);
+                    //push the operator that was clicked on
+                    //perform the operation
+                        if (finalOperands[1] === "+") {
+                           result = addition(finalOperands);
+                        } else if (finalOperands[1] === "-") {
+                            result = subtraction(finalOperands);
+                        } else if (finalOperands[1] === "*") {
+                            result = multiplication(finalOperands);
+                        } else if (finalOperands[1] === "/") {
+                            result = division(finalOperands);
+                        }
+                        //put answer as first element in the array
+                        finalOperands.unshift(result)
+                        //remove the previous 2 operands from the array
+                        finalOperands.splice(1, 2);
+
+                        display.textContent = result;
+                    //MAGIC HAS TO HAPPEN HERE
+                    //before pushing the second
+                    //operator
+                    finalOperands.push(operator);
+
                     console.log(finalOperands)
+                    
                     // if i comment the next 2 lines out, it still works
+                    // finalOperands = [];
+                    console.log(finalOperands)
                     secondNumber = "";
                     firstNumber = "";
                     
+                    
                 }
-            }
+
+
+            } 
+
+        
+       
+        
         });
     }
 
@@ -80,19 +127,6 @@ function handleCalculations() {
 }
 
 handleCalculations()
-
-// console.
-// console.log(numberButtons);
-
-console.log(finalOperands);
-
-
-
-
-
-
-
-
 
 
 
