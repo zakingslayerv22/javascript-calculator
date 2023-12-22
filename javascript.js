@@ -44,6 +44,7 @@ let finalOperands = [];
 
 const numberButtons = document.querySelectorAll(".number");
 const operatorButtons = document.querySelectorAll(".operator");
+const equalsButton = document.querySelector("#equals")
 const display = document.querySelector('#screen');
 
 
@@ -106,7 +107,7 @@ function handleCalculations() {
                     console.log(finalOperands)
                     
                     // if i comment the next 2 lines out, it still works
-                    // finalOperands = [];
+
                     console.log(finalOperands)
                     secondNumber = "";
                     firstNumber = "";
@@ -122,6 +123,50 @@ function handleCalculations() {
         
         });
     }
+
+
+//function to push secondNumber and clean up the
+//array after equals
+    function cleanUpArrayAfterEquals(operation) {
+        //push the secondNumber in the array
+        finalOperands.push(secondNumber);
+        result = operation(finalOperands);
+        finalOperands.unshift(result);
+        finalOperands.splice(1, 2);
+
+        secondNumber = +firstNumber;
+        console.log(finalOperands);
+
+    }
+
+    //add event listener on the equals button
+    equalsButton.addEventListener('click', () => {
+        let equalsButtonText = equalsButton.textContent;
+
+        //should this be greater or equals to 2 instead?
+        if (equalsButtonText && (finalOperands.length == 2)) {
+            if (finalOperands[1] === "+") {
+                console.log("It is plus");
+                cleanUpArrayAfterEquals(addition);
+                console.log(finalOperands);
+      
+             } else if (finalOperands[1] === "-") {
+                 cleanUpArrayAfterEquals(subtraction);
+                 
+             } else if (finalOperands[1] === "*") {
+                 cleanUpArrayAfterEquals(multiplication);
+             } else if (finalOperands[1] === "/") {
+                 cleanUpArrayAfterEquals(division);
+             }
+     
+             console.log(finalOperands)
+             display.textContent = result;
+             // result = addition(finalOperands);
+             // display.textContent = result;
+        }
+
+
+    })
 
 
 }
