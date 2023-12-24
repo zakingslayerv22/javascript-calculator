@@ -45,11 +45,26 @@ let finalOperands = [];
 const numberButtons = document.querySelectorAll(".number");
 const operatorButtons = document.querySelectorAll(".operator");
 const equalsButton = document.querySelector("#equals")
+const negativeButton = document.querySelector("#negative")
 const display = document.querySelector('#screen');
 
 
 function handleCalculations() {
+    
+    negativeButton.addEventListener('click', () => {
+        let negativeButtonText = ("-");
 
+            if (negativeButtonText) {
+                // console.log("wait")
+                firstNumber += negativeButtonText; 
+                secondNumber = firstNumber
+                display.textContent = secondNumber;
+            }
+
+            if (result.includes("-")){
+                console.log('Eureka!')
+            }
+    });
 
     for (let i = 0; i < numberButtons.length; i++) {
         numberButtons[i].addEventListener("click", () => {
@@ -57,7 +72,7 @@ function handleCalculations() {
 
             if (buttonText) {
                 firstNumber += buttonText;
-                secondNumber = +firstNumber
+                secondNumber = firstNumber
                 console.log(secondNumber)
                 display.textContent = secondNumber;
             }
@@ -111,16 +126,11 @@ function handleCalculations() {
                     console.log(finalOperands)
                     secondNumber = "";
                     firstNumber = "";
-                    
-                    
-                }
 
+                }
 
             } 
 
-        
-       
-        
         });
     }
 
@@ -151,8 +161,7 @@ function handleCalculations() {
                 console.log(finalOperands);
       
              } else if (finalOperands[1] === "-") {
-                 cleanUpArrayAfterEquals(subtraction);
-                 
+                 cleanUpArrayAfterEquals(subtraction); 
              } else if (finalOperands[1] === "*") {
                  cleanUpArrayAfterEquals(multiplication);
              } else if (finalOperands[1] === "/") {
