@@ -59,7 +59,7 @@ console.log(home)
 function handleCalculations() {
     
     negativeButton.addEventListener('click', () => {
-        let negativeButtonText = ("-");
+        let e = ("-");
 
             if (!result) {
                 // console.log("wait")
@@ -72,6 +72,11 @@ function handleCalculations() {
                 result = String(result);
                     if (result.includes("-")){
                         result = result.replace("-", "");
+                        finalOperands[0] = result;
+                        display.textContent = result;
+                        console.log(finalOperands)
+                    } else {
+                        result = "-" + result;
                         finalOperands[0] = result;
                         display.textContent = result;
                         console.log(finalOperands)
