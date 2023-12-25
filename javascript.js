@@ -50,23 +50,26 @@ const equalsButton = document.querySelector("#equals")
 const negativeButton = document.querySelector("#negative")
 const display = document.querySelector('#screen');
 
-let home = [200, 400];
-
-home[0] = 700
-
-console.log(home)
 
 function handleCalculations() {
     
     negativeButton.addEventListener('click', () => {
-        let e = ("-");
-
-            if (!result) {
+        let negativeButtonText = ("-");
+        
+        //if there is no result yet and firstNumber
+        //doesn't include a negative
+            if (!result && !firstNumber.includes("-")) {
                 // console.log("wait")
-                firstNumber += negativeButtonText; 
-                secondNumber = firstNumber
+                firstNumber = negativeButtonText + firstNumber; 
+                secondNumber = firstNumber;
                 display.textContent = secondNumber;
+            } else {
+                firstNumber = firstNumber.replace("-", "");
+                secondNumber = firstNumber;
+                display.textContent = secondNumber;     
             }
+
+            
             //else
             if (result) {
                 result = String(result);
