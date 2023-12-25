@@ -1,24 +1,26 @@
 function addition (array) {
     array.splice(1, 1);
+    array = array.map(Number);
     return array.reduce((sum, current) => sum + current, 0);
 }
 
 function subtraction (array) {
     array.splice(1, 1);
+    array = array.map(Number);
     return array.reduce((difference, current) => difference - current);
 }
 
 function multiplication (array) {
     array.splice(1, 1);
+    array = array.map(Number);
     return array.reduce((product, current) => product * current, 1);
 }
 
 function division (array) {
     array.splice(1, 1);
+    array = array.map(Number);
     return array.reduce((quotient, current) => quotient / current);
 }
-
-
 
 
 function operate(operator, firstNumber, secondNumber) {
@@ -76,6 +78,13 @@ function handleCalculations() {
                 console.log(secondNumber)
                 display.textContent = secondNumber;
             }
+
+            // if (buttonText === "0"){
+            //     firstNumber += buttonText;
+            //     secondNumber = firstNumber * 1;
+            //     console.log(typeof secondNumber)
+            //     display.textContent = secondNumber;
+            // }
 
         });
     }
