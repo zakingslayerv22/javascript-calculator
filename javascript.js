@@ -101,8 +101,8 @@ function handleCalculations() {
                 secondNumber = firstNumber;
                 display.textContent = secondNumber;     
             }
+            result = String(result);
 
-            
             //else
             if (result) {
                 result = String(result);
@@ -235,6 +235,9 @@ function handleCalculations() {
              //toggling this affects the display of the +/-
             //button when you want the result to
             //be used as the next operand.
+
+            //If it is commented out, it'll display -secondNumber
+            //instead of -result
              firstNumber = "";
              secondNumber = "";
              // result = addition(finalOperands);
@@ -242,7 +245,19 @@ function handleCalculations() {
         }
 
 
+    });
+
+    //the clear button
+    const clearButton = document.querySelector("#clear");
+
+    clearButton.addEventListener('click', () => {
+        display.textContent = 0;
+        firstNumber = '';
+        secondNumber = '';
+        finalOperands = [];
+        operator = '';
     })
+
 
 
 }
