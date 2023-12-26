@@ -62,6 +62,12 @@ function handleCalculations() {
             display.textContent = firstNumber;
         } 
 
+        // if (finalOperands.length >= 1 && operator) {
+        //     firstNumber += "."; 
+        //     secondNumber = firstNumber;
+        //     display.textContent = secondNumber;
+        // }
+
         // if (result && operator) {
            
         //     result = String(result)
@@ -226,8 +232,11 @@ function handleCalculations() {
              console.log(finalOperands)
              display.textContent = result;
 
+             //toggling this affects the display of the +/-
+            //button when you want the result to
+            //be used as the next operand.
+             firstNumber = "";
              secondNumber = "";
-                    firstNumber = "";
              // result = addition(finalOperands);
              // display.textContent = result;
         }
