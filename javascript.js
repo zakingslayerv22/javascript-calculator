@@ -48,11 +48,38 @@ const numberButtons = document.querySelectorAll(".number");
 const operatorButtons = document.querySelectorAll(".operator");
 const equalsButton = document.querySelector("#equals")
 const negativeButton = document.querySelector("#negative")
+const decimalButton = document.querySelector('#decimal');
 const display = document.querySelector('#screen');
 
 
 function handleCalculations() {
-    
+    //handle decimals
+
+    decimalButton.addEventListener('click', () => {
+        if (!result && !firstNumber.includes(".")) {
+            firstNumber += ".";
+            secondNumber = firstNumber;
+            display.textContent = firstNumber;
+        } 
+
+        // if (result && operator) {
+           
+        //     result = String(result)
+
+        //         if (!secondNumber.includes(".")) {
+        //             secondNumber += ".";
+        //             // secondNumber = firstNumber;
+        //             display.textContent = secondNumber;
+        //         } else if (result.includes(".")) {
+        //             result = result;
+        //             display.textContent = result;
+        //         }
+            
+        // }
+    });
+
+
+    // for the +/- toggle button
     negativeButton.addEventListener('click', () => {
         let negativeButtonText = ("-");
         
@@ -84,6 +111,13 @@ function handleCalculations() {
                         display.textContent = result;
                         console.log(finalOperands)
                     }
+
+                    // for the second operand if there is a a result
+                    if (finalOperands.length >= 1 && operator) {
+                        firstNumber = negativeButtonText + firstNumber; 
+                        secondNumber = firstNumber;
+                        display.textContent = secondNumber;
+                    }
             }
             
     });
@@ -98,14 +132,6 @@ function handleCalculations() {
                 console.log(secondNumber)
                 display.textContent = secondNumber;
             }
-
-            // if (buttonText === "0"){
-            //     firstNumber += buttonText;
-            //     secondNumber = firstNumber * 1;
-            //     console.log(typeof secondNumber)
-            //     display.textContent = secondNumber;
-            // }
-
         });
     }
 
@@ -173,7 +199,7 @@ function handleCalculations() {
         finalOperands.unshift(result);
         finalOperands.splice(1, 2);
 
-        secondNumber = +firstNumber;
+        secondNumber = firstNumber;
         console.log(finalOperands);
 
     }
@@ -199,6 +225,9 @@ function handleCalculations() {
      
              console.log(finalOperands)
              display.textContent = result;
+
+             secondNumber = "";
+                    firstNumber = "";
              // result = addition(finalOperands);
              // display.textContent = result;
         }
