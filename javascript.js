@@ -23,19 +23,6 @@ function division (array) {
 }
 
 
-function operate(operator, firstNumber, secondNumber) {
-    switch (operator) {
-        case "+":
-            return addition(firstNumber, secondNumber);
-        case "-":
-            return subtraction(firstNumber, secondNumber);
-        case "*":
-            return multiplication(firstNumber, secondNumber);
-        case "/":
-            return division(firstNumber, secondNumber);
-    }
-}
-
 let firstNumber = "",
         secondNumber = "",
             result = "",
@@ -62,26 +49,20 @@ function handleCalculations() {
             display.textContent = firstNumber;
         } 
 
-        // if (finalOperands.length >= 1 && operator) {
-        //     firstNumber += "."; 
-        //     secondNumber = firstNumber;
-        //     display.textContent = secondNumber;
-        // }
-
-        // if (result && operator) {
+        if (result && operator) {
            
-        //     result = String(result)
+            result = String(result)
 
-        //         if (!secondNumber.includes(".")) {
-        //             secondNumber += ".";
-        //             // secondNumber = firstNumber;
-        //             display.textContent = secondNumber;
-        //         } else if (result.includes(".")) {
-        //             result = result;
-        //             display.textContent = result;
-        //         }
+                if (!firstNumber.includes(".")) {
+                    // firstNumber = ""
+                    firstNumber += ".";
+                    secondNumber = firstNumber;
+
+                    display.textContent = firstNumber;
+                }
             
-        // }
+        }
+
     });
 
 
@@ -101,8 +82,8 @@ function handleCalculations() {
                 secondNumber = firstNumber;
                 display.textContent = secondNumber;     
             }
-            result = String(result);
 
+            
             //else
             if (result) {
                 result = String(result);
@@ -110,18 +91,17 @@ function handleCalculations() {
                         result = result.replace("-", "");
                         finalOperands[0] = result;
                         display.textContent = result;
-                        console.log(finalOperands)
                     } else {
                         result = "-" + result;
                         finalOperands[0] = result;
                         display.textContent = result;
-                        console.log(finalOperands)
                     }
 
-                    // for the second operand if there is a a result
+                    
                     if (finalOperands.length >= 1 && operator) {
                         firstNumber = negativeButtonText + firstNumber; 
                         secondNumber = firstNumber;
+                        // result = secondNumber;
                         display.textContent = secondNumber;
                     }
             }
@@ -137,6 +117,10 @@ function handleCalculations() {
                 secondNumber = firstNumber
                 console.log(secondNumber)
                 display.textContent = secondNumber;
+            } 
+
+            if (finalOperands.length > 0) {
+                console.log ("Target");
             }
         });
     }
@@ -147,7 +131,8 @@ function handleCalculations() {
             let operatorButtonText = operatorButtons[j].textContent;
             // display.textContent += operatorButtonText
 
-            if (operatorButtonText) {
+            if (operatorButtonText) {//HERE IF OPERATOR BUTTON AND N0
+                //RESULT
                 operator = operatorButtonText;
                 if (finalOperands.length == 0 && secondNumber) {
                     finalOperands[0] = secondNumber;
@@ -175,9 +160,7 @@ function handleCalculations() {
                         finalOperands.splice(1, 2);
 
                         display.textContent = result;
-                    //MAGIC HAS TO HAPPEN HERE
-                    //before pushing the second
-                    //operator
+                    
                     finalOperands.push(operator);
 
                     console.log(finalOperands)
@@ -205,7 +188,7 @@ function handleCalculations() {
         finalOperands.unshift(result);
         finalOperands.splice(1, 2);
 
-        secondNumber = firstNumber;
+        secondNumber = +firstNumber;
         console.log(finalOperands);
 
     }
@@ -217,10 +200,7 @@ function handleCalculations() {
         //should this be greater or equals to 2 instead?
         if (equalsButtonText && (finalOperands.length == 2)) {
             if (finalOperands[1] === "+") {
-                console.log("It is plus");
-                cleanUpArrayAfterEquals(addition);
-                console.log(finalOperands);
-      
+                cleanUpArrayAfterEquals(addition); 
              } else if (finalOperands[1] === "-") {
                  cleanUpArrayAfterEquals(subtraction); 
              } else if (finalOperands[1] === "*") {
@@ -231,53 +211,70 @@ function handleCalculations() {
      
              console.log(finalOperands)
              display.textContent = result;
-
-             //toggling this affects the display of the +/-
-            //button when you want the result to
-            //be used as the next operand.
-
-            //If it is commented out, it'll display -secondNumber
-            //instead of -result
-             firstNumber = "";
-             secondNumber = "";
-             // result = addition(finalOperands);
-             // display.textContent = result;
         }
 
+        // finalOperands = [];
+
+        if (result && !operator) {
+            console.log("Target");
+        }
 
     });
 
-    //the clear button
-    const clearButton = document.querySelector("#clear");
 
-    clearButton.addEventListener('click', () => {
-        display.textContent = 0;
-        firstNumber = '';
-        secondNumber = '';
-        finalOperands = [];
-        operator = '';
-    })
+ //the clear button
+ const clearButton = document.querySelector("#clear");
 
+ clearButton.addEventListener('click', () => {
+     display.textContent = 0;
+     firstNumber = '';
+     secondNumber = ''; 
+     result = '';
+     finalOperands = [];
+     operator = '';
+ });
+
+ //the backspace button
+
+ const backspaceButton = document.querySelector("#backspace");
+
+ backspaceButton.addEventListener('click', () => { 
+    
+    if (firstNumber && !result) {
+        firstNumber = firstNumber.slice(0, -1);
+        secondNumber = firstNumber;
+        console.log(secondNumber)
+        display.textContent = secondNumber;
+            if (firstNumber === "") {
+                display.textContent = 0;
+            } else if (firstNumber !== "") {
+                display.textContent = firstNumber;
+            }
+    } 
+
+
+    // if (result) {
+    //     result = String(result);
+    //     result = result.slice(0, -1);
+    //     display.textContent = result;
+    //         if (result === "") {
+    //             result = "0"
+    //             firstNumber = "";
+    //             secondNumber = "";
+    //             operator = "";
+    //             finalOperands = [];
+    //             display.textContent = result;
+    //         }
+    // }
+
+
+     
+ });
 
 
 }
 
 handleCalculations()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
