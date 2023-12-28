@@ -43,6 +43,12 @@ function resetAll() {
     finalOperands = [];
 }
 
+function roundedToEightDecimals(number) {
+    return Math.round(number * 100000000) / 100000000
+}
+
+// const roundedToNineDecimals = (number) => Math.round(number * 1000000000) / 1000000000;
+
 const numberButtons = document.querySelectorAll(".number");
 const operatorButtons = document.querySelectorAll(".operator");
 const equalsButton = document.querySelector("#equals")
@@ -169,6 +175,7 @@ function handleCalculations() {
                         //put answer as first element in the array
                         //if result is not "Can't divide by 0"
                         if (result !== "Can't divide by 0") {
+                            result = roundedToEightDecimals(result);
                             finalOperands.unshift(result)
                             //remove the previous 2 operands from the array
                             finalOperands.splice(1, 2);
@@ -206,6 +213,7 @@ function handleCalculations() {
         result = operation(finalOperands); //between here
 
             if (result !== "Can't divide by 0") {
+                result = roundedToEightDecimals(result)
                 finalOperands.unshift(result);
                 finalOperands.splice(1, 2);
             } else {
