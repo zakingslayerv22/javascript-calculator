@@ -204,8 +204,14 @@ function handleCalculations() {
         //push the secondNumber in the array
         finalOperands.push(secondNumber);
         result = operation(finalOperands); //between here
-        finalOperands.unshift(result);
-        finalOperands.splice(1, 2);
+
+            if (result !== "Can't divide by 0") {
+                finalOperands.unshift(result);
+                finalOperands.splice(1, 2);
+            } else {
+                finalOperands = [];
+            }
+       
 
         secondNumber = +firstNumber;
         console.log(finalOperands);
@@ -230,12 +236,8 @@ function handleCalculations() {
      
              console.log(finalOperands)
              display.textContent = result;
-        }
-
-        // finalOperands = [];
-
-        if (result && !operator) {
-            console.log("Target");
+            //  firstNumber = "";
+            //  secondNumber = "";
         }
 
     });
