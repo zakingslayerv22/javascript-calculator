@@ -49,6 +49,8 @@ function roundedToEightDecimals(number) {
 
 // const roundedToNineDecimals = (number) => Math.round(number * 1000000000) / 1000000000;
 
+
+
 const numberButtons = document.querySelectorAll(".number");
 const operatorButtons = document.querySelectorAll(".operator");
 const equalsButton = document.querySelector("#equals")
@@ -56,74 +58,113 @@ const negativeButton = document.querySelector("#negative")
 const decimalButton = document.querySelector('#decimal');
 const display = document.querySelector('#screen');
 
+//handle Numbers
+const handleNumbers = (input) => {
+    firstNumber += input;
+    secondNumber = firstNumber
+    console.log(secondNumber)
+    display.textContent = secondNumber;
+};
+//handle decimals
+const handleDecimal = (theDecimalPoint) => {
+    if (!result && !firstNumber.includes(theDecimalPoint)) {
+        firstNumber += theDecimalPoint;
+        secondNumber = firstNumber;
+        display.textContent = firstNumber;
+    } 
+
+    if (result && operator) {
+       
+        result = String(result)
+
+            if (!firstNumber.includes(theDecimalPoint)) {
+                // firstNumber = ""
+                firstNumber += theDecimalPoint;
+                secondNumber = firstNumber;
+
+                display.textContent = firstNumber;
+            }
+        
+    }
+
+};
+
+//handle the +/- toggle button
+const handleMinusPlusToggle = (theInput) => {
+    theInput = ("-");
+        
+    //if there is no result yet and firstNumber
+    //doesn't include a negative
+        if (!result && !firstNumber.includes("-")) {
+            // console.log("wait")
+            firstNumber = theInput + firstNumber; 
+            secondNumber = firstNumber;
+            display.textContent = secondNumber;
+        } else {
+            firstNumber = firstNumber.replace("-", "");
+            secondNumber = firstNumber;
+            display.textContent = secondNumber;     
+        }
+
+        
+        //else
+        if (result) {
+            result = String(result);
+                if (result.includes("-")){
+                    result = result.replace("-", "");
+                    finalOperands[0] = result;
+                    display.textContent = result;
+                } else {
+                    result = "-" + result;
+                    finalOperands[0] = result;
+                    display.textContent = result;
+                }
+                //negativeButtonText is not defined
+                //if i change it to theInput or "-", the 
+                //code will break
+                
+                if (finalOperands.length >= 1 && operator) {
+                    firstNumber = negativeButtonText + firstNumber; 
+                    secondNumber = firstNumber;
+                    // result = secondNumber;
+                    display.textContent = secondNumber;
+                }
+        }
+};
+
+const handleOperators = (operator) => {
+    
+}
 
 function handleCalculations() {
+
+    document.addEventListener("keydown", (event) => {
+        let theEventKey = event.key;
+           if (theEventKey === "0" || theEventKey === "1" || theEventKey === "2"
+                    || theEventKey === "3" || theEventKey === "4" || theEventKey === "5"
+                    || theEventKey === "6" || theEventKey === "7" || theEventKey === "8"
+                    || theEventKey === "9") {
+               
+            handleNumbers(theEventKey)
+           } else if (theEventKey === ".") {
+                handleDecimal(theEventKey)
+           } else if (theEventKey === "-") {
+                handleMinusPlusToggle(theEventKey)
+           }
+
+
+    });
+
     //handle decimals
 
     decimalButton.addEventListener('click', () => {
-        if (!result && !firstNumber.includes(".")) {
-            firstNumber += ".";
-            secondNumber = firstNumber;
-            display.textContent = firstNumber;
-        } 
-
-        if (result && operator) {
-           
-            result = String(result)
-
-                if (!firstNumber.includes(".")) {
-                    // firstNumber = ""
-                    firstNumber += ".";
-                    secondNumber = firstNumber;
-
-                    display.textContent = firstNumber;
-                }
-            
-        }
-
+        handleDecimals(".");
     });
 
 
     // for the +/- toggle button
     negativeButton.addEventListener('click', () => {
-        let negativeButtonText = ("-");
-        
-        //if there is no result yet and firstNumber
-        //doesn't include a negative
-            if (!result && !firstNumber.includes("-")) {
-                // console.log("wait")
-                firstNumber = negativeButtonText + firstNumber; 
-                secondNumber = firstNumber;
-                display.textContent = secondNumber;
-            } else {
-                firstNumber = firstNumber.replace("-", "");
-                secondNumber = firstNumber;
-                display.textContent = secondNumber;     
-            }
-
-            
-            //else
-            if (result) {
-                result = String(result);
-                    if (result.includes("-")){
-                        result = result.replace("-", "");
-                        finalOperands[0] = result;
-                        display.textContent = result;
-                    } else {
-                        result = "-" + result;
-                        finalOperands[0] = result;
-                        display.textContent = result;
-                    }
-
-                    
-                    if (finalOperands.length >= 1 && operator) {
-                        firstNumber = negativeButtonText + firstNumber; 
-                        secondNumber = firstNumber;
-                        // result = secondNumber;
-                        display.textContent = secondNumber;
-                    }
-            }
-            
+        handleMinusPlusToggle("-");
     });
 
     for (let i = 0; i < numberButtons.length; i++) {
@@ -131,15 +172,12 @@ function handleCalculations() {
             let buttonText = numberButtons[i].textContent;
 
             if (buttonText) {
-                firstNumber += buttonText;
-                secondNumber = firstNumber
-                console.log(secondNumber)
-                display.textContent = secondNumber;
+                handleNumbers(buttonText);
             } 
 
-            if (finalOperands.length > 0) {
-                console.log ("Target");
-            }
+            // if (finalOperands.length > 0) {
+            //     console.log ("Target");
+            // }
         });
     }
 
