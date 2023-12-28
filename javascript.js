@@ -19,7 +19,11 @@ function multiplication (array) {
 function division (array) {
     array.splice(1, 1);
     array = array.map(Number);
-    return array.reduce((quotient, current) => quotient / current);
+        if (array[1] == 0) {
+           return "Can't divide by 0";
+        } else {
+            return array.reduce((quotient, current) => quotient / current);
+        }
 }
 
 
@@ -30,6 +34,14 @@ let firstNumber = "",
 
 let calculateOperands = [];
 let finalOperands = [];
+
+function resetAll() {
+    firstNumber = "";
+    secondNumber = "";
+    result = "";
+    operator = "";
+    finalOperands = [];
+}
 
 const numberButtons = document.querySelectorAll(".number");
 const operatorButtons = document.querySelectorAll(".operator");
@@ -155,13 +167,20 @@ function handleCalculations() {
                             result = division(finalOperands);
                         }
                         //put answer as first element in the array
-                        finalOperands.unshift(result)
-                        //remove the previous 2 operands from the array
-                        finalOperands.splice(1, 2);
+                        //if result is not "Can't divide by 0"
+                        if (result !== "Can't divide by 0") {
+                            finalOperands.unshift(result)
+                            //remove the previous 2 operands from the array
+                            finalOperands.splice(1, 2);
+                            finalOperands.push(operator);  
+                        } else {
+                            finalOperands = [];
+                        }
 
+                        // finalOperands.push(operator);
                         display.textContent = result;
                     
-                    finalOperands.push(operator);
+                    // finalOperands.push(operator);
 
                     console.log(finalOperands)
                     
@@ -184,7 +203,7 @@ function handleCalculations() {
     function cleanUpArrayAfterEquals(operation) {
         //push the secondNumber in the array
         finalOperands.push(secondNumber);
-        result = operation(finalOperands);
+        result = operation(finalOperands); //between here
         finalOperands.unshift(result);
         finalOperands.splice(1, 2);
 
@@ -206,7 +225,7 @@ function handleCalculations() {
              } else if (finalOperands[1] === "*") {
                  cleanUpArrayAfterEquals(multiplication);
              } else if (finalOperands[1] === "/") {
-                 cleanUpArrayAfterEquals(division);
+                 cleanUpArrayAfterEquals(division);  
              }
      
              console.log(finalOperands)
@@ -276,24 +295,3 @@ function handleCalculations() {
 
 handleCalculations()
 
-
-
-// if (operator) {
-//     secondNumber += numberButtons[i].textContent;
-//     document.querySelector(".second-number").textContent = secondNumber;
-// } else {
-//     firstNumber += numberButtons[i].textContent;
-//     document.querySelector(".first-number").textContent = firstNumber;
-// }
-// console.log (firstNumber, secondNumber, operator);
-
-// if (allNumbers[i].textContent === 'C') {
-//     display.textContent = '';
-// } else if (allNumbers[i].textContent === 'CE') {
-//     display.textContent = display.textContent.slice(0, -1);
-// } else {
-//     display.textContent += allNumbers[i].textContent;
-// }
-
-
-// console.log(singleOperand);
