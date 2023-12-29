@@ -35,13 +35,7 @@ let firstNumber = "",
 let calculateOperands = [];
 let finalOperands = [];
 
-function resetAll() {
-    firstNumber = "";
-    secondNumber = "";
-    result = "";
-    operator = "";
-    finalOperands = [];
-}
+
 
 function roundedToEightDecimals(number) {
     return Math.round(number * 100000000) / 100000000
@@ -132,12 +126,35 @@ const handleMinusPlusToggle = (theInput) => {
         }
 };
 
-const handleOperators = (operator) => {
-    
+//handle the reset button
+const handleResetAll = () => {
+    display.textContent = 0;
+    firstNumber = '';
+    secondNumber = ''; 
+    result = '';
+    finalOperands = [];
+    operator = '';
 }
 
+const handleBackspace = () => {
+        
+    if (firstNumber && !result) {
+        firstNumber = firstNumber.slice(0, -1);
+        secondNumber = firstNumber;
+        console.log(secondNumber)
+        display.textContent = secondNumber;
+            if (firstNumber === "") {
+                display.textContent = 0;
+            } else if (firstNumber !== "") {
+                display.textContent = firstNumber;
+            }
+    } 
+}
+
+//handle all calculations
 function handleCalculations() {
 
+    // handle keyboard support
     document.addEventListener("keydown", (event) => {
         let theEventKey = event.key;
            if (theEventKey === "0" || theEventKey === "1" || theEventKey === "2"
@@ -148,11 +165,11 @@ function handleCalculations() {
             handleNumbers(theEventKey)
            } else if (theEventKey === ".") {
                 handleDecimal(theEventKey)
-           } else if (theEventKey === "-") {
-                handleMinusPlusToggle(theEventKey)
+           }  else if (theEventKey === "Delete") {
+                handleResetAll()
+           } else if (theEventKey === "Backspace") {
+                handleBackspace();
            }
-
-
     });
 
     //handle decimals
@@ -167,6 +184,7 @@ function handleCalculations() {
         handleMinusPlusToggle("-");
     });
 
+    //handleNumbers
     for (let i = 0; i < numberButtons.length; i++) {
         numberButtons[i].addEventListener("click", () => {
             let buttonText = numberButtons[i].textContent;
@@ -174,14 +192,11 @@ function handleCalculations() {
             if (buttonText) {
                 handleNumbers(buttonText);
             } 
-
-            // if (finalOperands.length > 0) {
-            //     console.log ("Target");
-            // }
         });
     }
 
-
+    //for operators and the continuous string of calculation
+    //like 2 + 3 * 4....
     for (let j = 0; j < operatorButtons.length; j++) {
         operatorButtons[j].addEventListener("click", () => {
             let operatorButtonText = operatorButtons[j].textContent;
@@ -190,6 +205,7 @@ function handleCalculations() {
             if (operatorButtonText) {//HERE IF OPERATOR BUTTON AND N0
                 //RESULT
                 operator = operatorButtonText;
+                
                 if (finalOperands.length == 0 && secondNumber) {
                     finalOperands[0] = secondNumber;
                     finalOperands.push(operator);
@@ -293,12 +309,7 @@ function handleCalculations() {
  const clearButton = document.querySelector("#clear");
 
  clearButton.addEventListener('click', () => {
-     display.textContent = 0;
-     firstNumber = '';
-     secondNumber = ''; 
-     result = '';
-     finalOperands = [];
-     operator = '';
+    handleResetAll()
  });
 
  //the backspace button
@@ -306,36 +317,8 @@ function handleCalculations() {
  const backspaceButton = document.querySelector("#backspace");
 
  backspaceButton.addEventListener('click', () => { 
+    handleBackspace();
     
-    if (firstNumber && !result) {
-        firstNumber = firstNumber.slice(0, -1);
-        secondNumber = firstNumber;
-        console.log(secondNumber)
-        display.textContent = secondNumber;
-            if (firstNumber === "") {
-                display.textContent = 0;
-            } else if (firstNumber !== "") {
-                display.textContent = firstNumber;
-            }
-    } 
-
-
-    // if (result) {
-    //     result = String(result);
-    //     result = result.slice(0, -1);
-    //     display.textContent = result;
-    //         if (result === "") {
-    //             result = "0"
-    //             firstNumber = "";
-    //             secondNumber = "";
-    //             operator = "";
-    //             finalOperands = [];
-    //             display.textContent = result;
-    //         }
-    // }
-
-
-     
  });
 
 
