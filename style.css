@@ -1,6 +1,6 @@
-* {
+/* * {
     border: 1px solid black;
-}
+} */
 
 
 
@@ -16,16 +16,23 @@ body {
     flex-direction: column;
     align-items: center;
     width: 350px;
-    height: 500px;
+    height: 550px;
     margin: 100px 0px;
+    padding: 10px;
+    border: 1px solid black;
+
 }
 
+
+
 #screen {
-    height: 50px;
-    width: 350px;
+    height: 90px;
+    width: 330px;
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    justify-content: right;
+    align-items: flex-end;
+    border: 1px solid black;
+    padding: 10px
 }
 
 .row {
