@@ -1,22 +1,24 @@
-function addition (array) {
+//the operations functions
+
+const addition = (array) => {
     array.splice(1, 1);
     array = array.map(Number);
     return array.reduce((sum, current) => sum + current, 0);
 }
 
-function subtraction (array) {
+const subtraction = (array) => {
     array.splice(1, 1);
     array = array.map(Number);
     return array.reduce((difference, current) => difference - current);
 }
 
-function multiplication (array) {
+const multiplication = (array) => {
     array.splice(1, 1);
     array = array.map(Number);
     return array.reduce((product, current) => product * current, 1);
 }
 
-function division (array) {
+const division = (array) => {
     array.splice(1, 1);
     array = array.map(Number);
         if (array[1] == 0) {
@@ -27,39 +29,48 @@ function division (array) {
 }
 
 
+//define the operands, result and operator
 let firstNumber = "",
         secondNumber = "",
             result = "",
             operator;
 
-let calculateOperands = [];
+//define the finalOperands array
 let finalOperands = [];
 
+function resetAll() {
+    firstNumber = "";
+    secondNumber = "";
+    result = "";
+    operator = "";
+    finalOperands = [];
+}
 
-
-function roundedToEightDecimals(number) {
+const roundedToEightDecimals = (number) => {
     return Math.round(number * 100000000) / 100000000
 }
 
-// const roundedToNineDecimals = (number) => Math.round(number * 1000000000) / 1000000000;
+// const roundedToEightDecimals = (number) => Math.round(number * 1000000000) / 1000000000;
 
 
-
+//define all the buttons - dom elements
 const numberButtons = document.querySelectorAll(".number");
 const operatorButtons = document.querySelectorAll(".operator");
 const equalsButton = document.querySelector("#equals")
 const negativeButton = document.querySelector("#negative")
 const decimalButton = document.querySelector('#decimal');
+const clearButton = document.querySelector("#clear");
+const backspaceButton = document.querySelector("#backspace");
 const display = document.querySelector('#screen');
 
-//handle Numbers
+//function to handle Numbers
 const handleNumbers = (input) => {
     firstNumber += input;
     secondNumber = firstNumber
     console.log(secondNumber)
     display.textContent = secondNumber;
 };
-//handle decimals
+//function to handle decimals
 const handleDecimal = (theDecimalPoint) => {
     if (!result && !firstNumber.includes(theDecimalPoint)) {
         firstNumber += theDecimalPoint;
@@ -78,12 +89,11 @@ const handleDecimal = (theDecimalPoint) => {
 
                 display.textContent = firstNumber;
             }
-        
     }
 
 };
 
-//handle the +/- toggle button
+//function to handle the +/- toggle button
 const handleMinusPlusToggle = (theInput) => {
     theInput = ("-");
         
@@ -100,7 +110,6 @@ const handleMinusPlusToggle = (theInput) => {
             display.textContent = secondNumber;     
         }
 
-        
         //else
         if (result) {
             result = String(result);
@@ -113,9 +122,7 @@ const handleMinusPlusToggle = (theInput) => {
                     finalOperands[0] = result;
                     display.textContent = result;
                 }
-                //negativeButtonText is not defined
-                //if i change it to theInput or "-", the 
-                //code will break
+
                 
                 if (finalOperands.length >= 1 && operator) {
                     firstNumber = negativeButtonText + firstNumber; 
@@ -124,37 +131,16 @@ const handleMinusPlusToggle = (theInput) => {
                     display.textContent = secondNumber;
                 }
         }
-};
-
-//handle the reset button
-const handleResetAll = () => {
-    display.textContent = 0;
-    firstNumber = '';
-    secondNumber = ''; 
-    result = '';
-    finalOperands = [];
-    operator = '';
 }
 
-const handleBackspace = () => {
-        
-    if (firstNumber && !result) {
-        firstNumber = firstNumber.slice(0, -1);
-        secondNumber = firstNumber;
-        console.log(secondNumber)
-        display.textContent = secondNumber;
-            if (firstNumber === "") {
-                display.textContent = 0;
-            } else if (firstNumber !== "") {
-                display.textContent = firstNumber;
-            }
-    } 
-}
 
-//handle all calculations
+
+
+
+//function to handle calculations
 function handleCalculations() {
 
-    // handle keyboard support
+    //for the keyboard
     document.addEventListener("keydown", (event) => {
         let theEventKey = event.key;
            if (theEventKey === "0" || theEventKey === "1" || theEventKey === "2"
@@ -165,26 +151,25 @@ function handleCalculations() {
             handleNumbers(theEventKey)
            } else if (theEventKey === ".") {
                 handleDecimal(theEventKey)
-           }  else if (theEventKey === "Delete") {
-                handleResetAll()
-           } else if (theEventKey === "Backspace") {
-                handleBackspace();
+           } else if (theEventKey === "-") {
+                handleMinusPlusToggle(theEventKey)
            }
     });
 
-    //handle decimals
 
+    //handle decimals
     decimalButton.addEventListener('click', () => {
-        handleDecimals(".");
+        handleDecimal(".");
     });
 
 
-    // for the +/- toggle button
+    // handle the +/- toggle button
     negativeButton.addEventListener('click', () => {
         handleMinusPlusToggle("-");
     });
 
-    //handleNumbers
+
+    //handle the number buttons
     for (let i = 0; i < numberButtons.length; i++) {
         numberButtons[i].addEventListener("click", () => {
             let buttonText = numberButtons[i].textContent;
@@ -193,10 +178,10 @@ function handleCalculations() {
                 handleNumbers(buttonText);
             } 
         });
-    }
+    };
 
-    //for operators and the continuous string of calculation
-    //like 2 + 3 * 4....
+
+    //handle operator buttons and a string of continuous calculations
     for (let j = 0; j < operatorButtons.length; j++) {
         operatorButtons[j].addEventListener("click", () => {
             let operatorButtonText = operatorButtons[j].textContent;
@@ -205,7 +190,6 @@ function handleCalculations() {
             if (operatorButtonText) {//HERE IF OPERATOR BUTTON AND N0
                 //RESULT
                 operator = operatorButtonText;
-                
                 if (finalOperands.length == 0 && secondNumber) {
                     finalOperands[0] = secondNumber;
                     finalOperands.push(operator);
@@ -238,10 +222,9 @@ function handleCalculations() {
                             finalOperands = [];
                         }
 
-                        // finalOperands.push(operator);
+                      
                         display.textContent = result;
                     
-                    // finalOperands.push(operator);
 
                     console.log(finalOperands)
                     
@@ -280,7 +263,8 @@ function handleCalculations() {
 
     }
 
-    //add event listener on the equals button
+    //handle the equals equals button after inputting 
+    //operand, operator and then operand
     equalsButton.addEventListener('click', () => {
         let equalsButtonText = equalsButton.textContent;
 
@@ -305,20 +289,34 @@ function handleCalculations() {
     });
 
 
- //the clear button
- const clearButton = document.querySelector("#clear");
-
+ //handle the clear button
+ 
  clearButton.addEventListener('click', () => {
-    handleResetAll()
+     display.textContent = 0;
+     firstNumber = '';
+     secondNumber = ''; 
+     result = '';
+     finalOperands = [];
+     operator = '';
  });
 
- //the backspace button
-
- const backspaceButton = document.querySelector("#backspace");
+ 
+ //handle the backspace button
 
  backspaceButton.addEventListener('click', () => { 
-    handleBackspace();
     
+    if (firstNumber && !result) {
+        firstNumber = firstNumber.slice(0, -1);
+        secondNumber = firstNumber;
+        console.log(secondNumber)
+        display.textContent = secondNumber;
+            if (firstNumber === "") {
+                display.textContent = 0;
+            } else if (firstNumber !== "") {
+                display.textContent = firstNumber;
+            }
+    } 
+     
  });
 
 
