@@ -1,0 +1,29 @@
+* {
+    border: 1px solid black;
+}
+
+
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+
+.calc-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 350px;
+    height: 500px;
+    margin: 100px 0px;;
+}
+
+#screen {
+    height: 50px;
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
