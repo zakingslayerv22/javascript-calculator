@@ -5,6 +5,6 @@ to this. (1 + 2 - 3 * 4 would work).
 
 These bugs stem from the fact that I did not arrange my logic systematically at the beginning of the project. I have learnt and I must move on.
 
-I hope to revisit this project in the nearest future, refactor the functions and make the more efficient.
+I hope to revisit this project in the nearest future, refactor the functions and make them more efficient.
 
 See you around.
