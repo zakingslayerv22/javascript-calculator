@@ -16,7 +16,8 @@ body {
     flex-direction: column;
     align-items: center;
     width: 350px;
-    height: 590px;
+    /* height: 500px; */
+    height: 540px;
     margin: 100px 0px;
     padding: 10px;
     border: 1px solid black;
@@ -52,6 +53,7 @@ body {
     border-radius: 40px;
 }
 
+
 button {
     width: 75px;
     height: 75px;
@@ -59,14 +61,26 @@ button {
     font-size: 23px;  
     color: white; 
     font-weight: bold;  
-    border: none;                                        
+    font-family: 'Calculator', sans-serif;
+    border: 0;   
+    transition-duration: 0.4s;
+    position: relative;
+    box-shadow: 0px 1px 2px rgb(255, 255, 255);
 }
+
+button:active,
+.active {
+  top: 2px;
+  left: 1px;
+  box-shadow: none;
+}
+
 
 #clear, #backspace, #negative {
     color: black;
 }
 
-.gray {
+.gray-color {
     background-color: rgb(180, 179, 179);
 }
 
@@ -76,4 +90,18 @@ button {
 
 .orange-color {
     background-color: rgb(255, 154, 2)
+}
+
+
+
+.gray-color:hover {
+    background-color: rgba(255, 255, 255, 0.5);;
+}
+
+.dark-gray-color:hover {
+    background-color: rgba(255, 255, 255, 0.5);;
+}
+
+.orange-color:hover {
+    background-color: rgb(255, 154, 2, 0.9)
 }

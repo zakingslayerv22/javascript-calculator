@@ -54,6 +54,7 @@ const roundedToEightDecimals = (number) => {
 
 
 //define all the buttons - dom elements
+const buttons = document.querySelectorAll("button");
 const numberButtons = document.querySelectorAll(".number");
 const operatorButtons = document.querySelectorAll(".operator");
 const equalsButton = document.querySelector("#equals")
@@ -133,8 +134,15 @@ const handleMinusPlusToggle = (theInput) => {
         }
 }
 
+//handle pressing down (and staying down) of button
 
+ buttons.forEach(button => {
+    button.addEventListener('click', () => {
+        button.classList.toggle('active');
 
+        setTimeout(() => { button.classList.remove('active'); }, 1000);
+    });
+});
 
 
 //function to handle calculations
@@ -172,10 +180,10 @@ function handleCalculations() {
     //handle the number buttons
     for (let i = 0; i < numberButtons.length; i++) {
         numberButtons[i].addEventListener("click", () => {
-            let buttonText = numberButtons[i].textContent;
+            let numberButtonText = numberButtons[i].textContent;
 
-            if (buttonText) {
-                handleNumbers(buttonText);
+            if (numberButtonText) {
+                handleNumbers(numberButtonText);
             } 
         });
     };
